@@ -1,0 +1,100 @@
+ ---
+    title: "big data"
+    author: "CAM"
+    date: "21 March 2020"
+    output:
+        pdf_document: default
+---
+
+Príklad 1 (pneumatiky)
+
+Sledovala sa životnosť pneumatík dvoch značiek. Zaznamenané údaje sú v tisícoch kilometrov, ktoré prešli náhodne vybrané automobily, kým nedošlo k opotrebovaniu pneumatík. Je kvalita niektorej značky štatisticky významne vyššia?
+
+```{r}
+pneu1 <- c(59, 34, 32, 62, 37, 35, 69, 42, 43, 47, 71, 58) 
+pneu2 <- c(39, 126, 127, 48, 54, 65, 70, 76, 118, 87, 90, 111)
+
+shapiro.test(pneu1)
+shapiro.test(pneu2)
+t.test(pneu1, pneu2)
+
+```
+
+Príklad 2 (imunoglobulín)
+Zadanie: V snahe určiť hladinu imunoglobulínu istej etnickej skupiny urobil sa screening na reprezentatívnej (náhodnej) vzorke 12 ročných chlapcov a dievčat, záznamy sú v mg/100ml. Rozhodnite, či je rozdiel medzi pohlaviami v hladine imunoglobulínu.
+```{r}
+chlapec <- c(9.3, 0.0, 12.2, 8.1, 5.7, 6.8, 3.6, 9.4, 8.5, 7.3, 9.7)
+dievča <- c(7.1, 0.0, 5.9, 7.6, 2.8, 5.8, 7.2, 7.4, 3.5, 3.3, 7.5, 7.0)
+
+shapiro.test(chlapec)
+shapiro.test(dievča)
+wilcox.test(chlapec, dievča, paired = FALSE)
+t.test(chlapec, dievča)
+```
+
+Príklad 3 (reklama)
+Zadanie: Spoločnosť porovnávala finančné náklady na reklamu v štyroch veľkých vydavateľstvách časopisov. V každom vydavateľstve bolo náhodne vybraných 7 časopisov a boli zistené náklady na ich reklamu v tisícoch korún. Treba overiť, či medzi týmito štyrmi nakladateľstvami sú rozdiely v nákladoch na reklamu, a ak nie, medzi ktorými je výrazný rozdiel.
+```{r}
+A <- c(57, 65, 50, 45, 70, 62, 38)
+B <- c(81, 72, 64, 55, 90, 38, 75)
+C <- c(35, 62, 58, 59, 46, 60, 61)
+D <- c(73, 85, 92, 68, 82, 94, 66)
+
+shapiro.test(A)
+shapiro.test(B)
+shapiro.test(C)
+shapiro.test(D)
+
+kruskal.test(A, B, C, D)
+
+y <- c(A, B, C, D)
+x <- c(rep("A", 7), rep("B", 7), rep("C", 7), rep("D", 7))
+boxplot(y ~ x)
+
+
+```
+
+Príklad 4 (poistenie)
+Zadanie: V snahe prešetriť ceny havarijných poistiek úrad pre ochranu spotrebiteľa náhodne vybral niekoľko vodičov poistených v jednej z troch hlavných poisťovní. Predpokladajme, že títo vodiči majú podobné autá, záznamy a poistné pokrytie. Na základe ročných nákladov na poistenie rozhodnite, či sa ceny líšia, a prípadne medzi ktorými poisťovňami.
+
+```{r}
+poisťovňa1 <- c(396, 438, 336, 318)
+poisťovňa2 <- c(348, 360, 522)
+poisťovňa3 <- c(378, 330, 294, 474, 432)
+
+shapiro.test(poisťovňa1)
+shapiro.test(poisťovňa2)
+shapiro.test(poisťovňa3)
+
+kruskal.test(poisťovňa1, poisťovňa2, poisťovňa3)
+
+
+```
+
+Príklad 5 (dychový objem)
+Zadanie: V 4 medicínskych centrách merali minútový dychový objem (v litroch) pacientom po prekonaní ochorenia COVID-19 s miernejším priebehom (vektor x). Po štvrťroku merali týmto pacientom v danom centre opäť minútový dychový objem (vektor y). Existuje štatisticky významný rozdiel v minútovom dychovom objeme meranom po ochorení a v meraní s odstupom času? Ak áno, ako sa prejavuje?
+
+v zariadení A
+```{r}
+x <- c(3.78, 3.32, 4.29, 3.78, 4.34, 4.21, 4.67, 4.55, 3.97, 4.18)
+y <- c(3.76, 3.87, 4.45, 3.71, 4.31, 4.62, 4.79, 4.55, 4.21, 4.01)
+```
+
+v zariadení B
+```{r}
+x <- c(3.82, 4.22, 3.78, 4.06, 3.74, 3.81, 3.89, 4.65, 4.15, 3.98)
+y <- c(3.76, 4.49, 3.83, 4.21, 3.68, 4.02, 4.02, 4.75, 4.25, 3.98)
+```
+
+v zariadení C
+```{r}
+ x <- c(4.28, 3.92, 3.29, 4.18, 3.54, 4.21, 3.89, 4.25, 4.05, 3.67)
+ y <- c(4.19, 4.08, 3.48, 4.01, 3.65, 4.38, 4.19, 4.18, 4.35, 3.88)
+```
+
+v zariadení D
+```{r}
+x <- c(3.82, 4.32, 4.29, 4.78, 3.34, 4.21, 3.67, 4.25, 3.97, 4.68)
+y <- c(4.01, 4.31, 4.33, 4.91, 3.61, 4.19, 3.82, 4.43, 3.62, 4.81)
+```
+

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marek Holík">
+
+<title>Zadanie Holík</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="zadanie_Holík_files/libs/clipboard/clipboard.min.js"></script>
+<script src="zadanie_Holík_files/libs/quarto-html/quarto.js"></script>
+<script src="zadanie_Holík_files/libs/quarto-html/popper.min.js"></script>
+<script src="zadanie_Holík_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="zadanie_Holík_files/libs/quarto-html/anchor.min.js"></script>
+<link href="zadanie_Holík_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="zadanie_Holík_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="zadanie_Holík_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="zadanie_Holík_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="zadanie_Holík_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Zadanie Holík</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marek Holík </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="úvod" class="level2">
+<h2 class="anchored" data-anchor-id="úvod">Úvod</h2>
+<p>Ako projekt na štatistické analyzovanie som si vybral dataset o športoch, ktorý obsahuje zoznam 60 športov a ich fyziologické nároky. Dataset obsahuje 14 premenných, kde 10 z ich obsahujú číselné hodnoty reprezentujúce: vytrvalosť, silu, explozivitu, rýchlosť, obratnosť, flexibilitu, nervovú odolnosť,výdrž silového zaťaženia, kordináciu a analytické schopnosti. 2 premenné obsahujú kategóriu športu a jeho kontaktonsť. Posledné premenné obsahujú celkové hodnotenie športu vypočítané súčtom všetkých predchádzajúcich hodnôt a výslednú hodnotu v rebríčku.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Dataset</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">SPORT</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ENDURANCE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">STREGTH</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">POWER</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SPEED</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AGILITY</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">FLEXIBILITY</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NERVE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">DURABILITY</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">HAND-EYE-CORD</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ANALYTIC APTITUDE</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">FIELD CATEGORY</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">CONTACT CATEGORY</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">TOTAL</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">RANK</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Boxing</td>
+<td style="text-align: right;">8.63</td>
+<td style="text-align: right;">8.13</td>
+<td style="text-align: right;">8.63</td>
+<td style="text-align: right;">6.38</td>
+<td style="text-align: right;">6.25</td>
+<td style="text-align: right;">4.38</td>
+<td style="text-align: right;">8.88</td>
+<td style="text-align: right;">8.50</td>
+<td style="text-align: right;">7.00</td>
+<td style="text-align: right;">5.63</td>
+<td style="text-align: left;">COMBAT SPORTS</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: right;">72.375</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ice Hockey</td>
+<td style="text-align: right;">7.25</td>
+<td style="text-align: right;">7.13</td>
+<td style="text-align: right;">7.88</td>
+<td style="text-align: right;">7.75</td>
+<td style="text-align: right;">7.63</td>
+<td style="text-align: right;">4.88</td>
+<td style="text-align: right;">6.00</td>
+<td style="text-align: right;">8.25</td>
+<td style="text-align: right;">7.50</td>
+<td style="text-align: right;">7.50</td>
+<td style="text-align: left;">TEAM SPORTS</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: right;">71.750</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Football</td>
+<td style="text-align: right;">5.38</td>
+<td style="text-align: right;">8.63</td>
+<td style="text-align: right;">8.13</td>
+<td style="text-align: right;">7.13</td>
+<td style="text-align: right;">6.38</td>
+<td style="text-align: right;">4.38</td>
+<td style="text-align: right;">7.25</td>
+<td style="text-align: right;">8.50</td>
+<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">7.13</td>
+<td style="text-align: left;">TEAM SPORTS</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: right;">68.375</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Basketball</td>
+<td style="text-align: right;">7.38</td>
+<td style="text-align: right;">6.25</td>
+<td style="text-align: right;">6.50</td>
+<td style="text-align: right;">7.25</td>
+<td style="text-align: right;">8.13</td>
+<td style="text-align: right;">5.63</td>
+<td style="text-align: right;">4.13</td>
+<td style="text-align: right;">7.75</td>
+<td style="text-align: right;">7.50</td>
+<td style="text-align: right;">7.38</td>
+<td style="text-align: left;">TEAM SPORTS</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: right;">67.875</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wrestling</td>
+<td style="text-align: right;">6.63</td>
+<td style="text-align: right;">8.38</td>
+<td style="text-align: right;">7.13</td>
+<td style="text-align: right;">5.13</td>
+<td style="text-align: right;">6.38</td>
+<td style="text-align: right;">7.50</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">6.75</td>
+<td style="text-align: right;">4.25</td>
+<td style="text-align: right;">6.38</td>
+<td style="text-align: left;">COMBAT SPORTS</td>
+<td style="text-align: left;">YES</td>
+<td style="text-align: right;">63.500</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="využitím-popisnej-štatistiky-charakterizujte-premennú-total.-výsledky-zobrazte-graficky-a-popíšte-aj-použité-grafy.-ktorý-field-category-je-v-súbore-najviac-zastúpený" class="level2">
+<h2 class="anchored" data-anchor-id="využitím-popisnej-štatistiky-charakterizujte-premennú-total.-výsledky-zobrazte-graficky-a-popíšte-aj-použité-grafy.-ktorý-field-category-je-v-súbore-najviac-zastúpený">1. Využitím popisnej štatistiky charakterizujte premennú Total. Výsledky zobrazte graficky a popíšte aj použité grafy. Ktorý Field category je v súbore najviac zastúpený?</h2>
+<div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">" "</span>, <span class="at">y =</span> TOTAL)) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fu">min</span>(data<span class="sc">$</span>TOTAL), <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Min: "</span>, <span class="fu">round</span>(<span class="fu">min</span>(data<span class="sc">$</span>TOTAL), <span class="dv">2</span>)), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fu">median</span>(data<span class="sc">$</span>TOTAL)<span class="sc">+</span><span class="dv">1</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Median: "</span>, <span class="fu">round</span>(<span class="fu">median</span>(data<span class="sc">$</span>TOTAL), <span class="dv">2</span>)), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fu">max</span>(data<span class="sc">$</span>TOTAL), <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Max: "</span>, <span class="fu">round</span>(<span class="fu">max</span>(data<span class="sc">$</span>TOTAL), <span class="dv">2</span>)), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(data<span class="sc">$</span>TOTAL), <span class="at">by =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of Total"</span>, <span class="at">x =</span> <span class="st">" "</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Total value"</span>) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>category_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span><span class="st">"FIELD CATEGORY"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Field_Category =</span> <span class="fu">names</span>(category_counts), <span class="at">Frequency =</span> <span class="fu">as.numeric</span>(category_counts))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> Field_Category, <span class="at">y =</span> Frequency, <span class="at">fill =</span> Field_Category)) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, ) <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frequency of Types of Sports"</span>, <span class="at">x =</span> <span class="st">"Field Category"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>, <span class="at">fill =</span> <span class="st">"Field Category"</span>) <span class="sc">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">max</span>(plot_data<span class="sc">$</span>Frequency), <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plot1 </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-fig.ncol="2">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Z prvého grafu vidíme, že minimálna hodnota v datasete je 14.5, maximálna je 72.38, median je 48, priemerná hodnota je 48.98. Z druhého grafu vidíme, že najviac zastúpená športová kategória je “Athletics” a najmenej “Moto Sports”.</p>
+</section>
+<section id="vhodným-testom-overte-na-hladine-významnosti-0.1-či-je-analytic-aptitude-najviac-4.-porovnajte-analytic-aptitude-vzhľadom-na-to-či-ide-o-kontaktný-alebo-bezkontaktný-šport.-je-tento-rozdiel-štatisticky-významný-na-hladine-významnosti-0.01" class="level2">
+<h2 class="anchored" data-anchor-id="vhodným-testom-overte-na-hladine-významnosti-0.1-či-je-analytic-aptitude-najviac-4.-porovnajte-analytic-aptitude-vzhľadom-na-to-či-ide-o-kontaktný-alebo-bezkontaktný-šport.-je-tento-rozdiel-štatisticky-významný-na-hladine-významnosti-0.01">2. Vhodným testom overte na hladine významnosti 0.1, či je Analytic aptitude najviac 4. Porovnajte Analytic aptitude, vzhľadom na to, či ide o kontaktný alebo bezkontaktný šport. Je tento rozdiel štatisticky významný na hladine významnosti 0.01?</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>distr_test <span class="ot">&lt;-</span><span class="fu">shapiro.test</span>(data<span class="sc">$</span><span class="st">`</span><span class="at">ANALYTIC APTITUDE</span><span class="st">`</span>) <span class="co"># 0.003 &lt; 0.1 =&gt; is not normal distribution</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(data<span class="sc">$</span><span class="st">`</span><span class="at">ANALYTIC APTITUDE</span><span class="st">`</span>, <span class="at">mu =</span> <span class="dv">4</span>, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">conf.level =</span> <span class="fl">0.9</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="co"># FALSE =&gt; nie je najviac 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>Z testu sme zistili, že hodnoty “ANALYTIC APTITUDE” nie sú normálne rozdelené, preto použijeme neparametrické testy.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">&lt;-</span>  data<span class="sc">$</span><span class="st">"ANALYTIC APTITUDE"</span>[data<span class="sc">$</span><span class="st">"CONTACT CATEGORY"</span> <span class="sc">==</span> <span class="st">"YES"</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span>  data<span class="sc">$</span><span class="st">"ANALYTIC APTITUDE"</span>[data<span class="sc">$</span><span class="st">"CONTACT CATEGORY"</span> <span class="sc">==</span> <span class="st">"NO"</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value =</span> <span class="fu">c</span>(vec1, vec2),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">category =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"YES"</span>, <span class="st">"NO"</span>), <span class="fu">c</span>(<span class="fu">length</span>(vec1), <span class="fu">length</span>(vec2))))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(vec1) <span class="co"># p.value &lt; 0.1 =&gt; nie je normálne rozdelenie</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  vec1
+W = 0.84464, p-value = 0.01137</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(vec2) <span class="co"># p.value &lt; 0.1 =&gt; nie je normálne rozdelenie</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  vec2
+W = 0.93333, p-value = 0.01366</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(vec1, vec2, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wilcox.test.default(vec1, vec2, alternative = "two.sided",
+conf.level = 0.99): cannot compute exact p-value with ties</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="co"># TRUE =&gt; rozdiel je statisticky vyznamny, kontanktný šport má vyššie hodnoty "ANALYTIC APTITUDE" ako bezkontaktný</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> category, <span class="at">y =</span> value, <span class="at">color =</span> category)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"YES"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>, <span class="st">"NO"</span> <span class="ot">=</span> <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>HO: Analytic aptitude je najviac 4. H1: Analytic aptitude nie je najviac 4. Pomocou wilcox testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu. Teda Analytic aptitude nie je najviac 4. Pri porovnaní Analytic aptitude vzhľadom na to, či ide o kontaktný alebo bezkontaktný šport sme zistili, že rozdiel je štatisticky významný na hladine významnosti 0.01. Z grafu vidíme, že kontaktný šport má vyššie hodnoty “ANALYTIC APTITUDE” ako bezkontaktný.</p>
+</section>
+<section id="existuje-štatisticky-významný-rozdiel-v-premennej-total-vzhľadom-na-field-category-berme-do-úvahy-len-team-sports-winter-sports-a-precision-sports-alebo-vzhľadom-na-to-či-je-durability-pod-5-alebo-5-a-viac-overte-vhodným-testom-a-aj-graficky.-ak-rozdiel-existuje-tak-medzi-ktorými-existuje-aj-interakcia-medzi-premennými" class="level2">
+<h2 class="anchored" data-anchor-id="existuje-štatisticky-významný-rozdiel-v-premennej-total-vzhľadom-na-field-category-berme-do-úvahy-len-team-sports-winter-sports-a-precision-sports-alebo-vzhľadom-na-to-či-je-durability-pod-5-alebo-5-a-viac-overte-vhodným-testom-a-aj-graficky.-ak-rozdiel-existuje-tak-medzi-ktorými-existuje-aj-interakcia-medzi-premennými">3. Existuje štatisticky významný rozdiel v premennej Total vzhľadom na Field category (berme do úvahy len team sports, winter sports a precision sports) alebo vzhľadom na to či je Durability pod 5 alebo 5 a viac? Overte vhodným testom a aj graficky. Ak rozdiel existuje, tak medzi ktorými? Existuje aj interakcia medzi premennými?</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>subset_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, data<span class="sc">$</span><span class="st">"FIELD CATEGORY"</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TEAM SPORTS"</span>, <span class="st">"WINTER SPORTS"</span>, <span class="st">"PRECISION SPORTS"</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(subset_data<span class="sc">$</span>TOTAL[subset_data<span class="sc">$</span><span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"TEAM SPORTS"</span>]) <span class="co"># p-value &gt; 0.1 =&gt; je normálne rozdelenie</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(subset_data<span class="sc">$</span>TOTAL[subset_data<span class="sc">$</span><span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"WINTER SPORTS"</span>]) <span class="co"># p-value &gt; 0.1 =&gt; je normálne rozdelenie</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(subset_data<span class="sc">$</span>TOTAL[subset_data<span class="sc">$</span><span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"PRECISION SPORTS"</span>]) <span class="co"># p-value &gt; 0.1 =&gt; je normálne rozdelenie</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Zistili sme, že všetky 3 kategórie sú normálne rozdelené.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(TOTAL <span class="sc">~</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>, <span class="at">data =</span> subset_data)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>aov_result <span class="ot">&lt;-</span> <span class="fu">anova</span>(model)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>aov_result<span class="sc">$</span><span class="st">"Pr(&gt;F)"</span>[<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="co"># TRUE =&gt; rozdiel je štatisticky významný</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre class="{FALSE}"><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(TOTAL <span class="sc">~</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>, <span class="at">data =</span> subset_data)<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="co"># TRUE p-value &gt; 0.1 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre class="{FALSE}"><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>HO: Rozdiel v premennej Total vzhľadom na “Field Category” je štatisticky významný. H1: Rozdiel v premennej Total vzhľadom na “Field Category” nie je štatisticky významný. Pomocou ANOVA testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu. Teda rozdiel v premennej Total vzhľadom na “Field Category” je štatisticky významný.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>durability_lt_5 <span class="ot">&lt;-</span> subset_data<span class="sc">$</span>TOTAL[data<span class="sc">$</span>DURABILITY <span class="sc">&lt;</span> <span class="dv">5</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>durability_ge_5 <span class="ot">&lt;-</span> subset_data<span class="sc">$</span>TOTAL[data<span class="sc">$</span>DURABILITY <span class="sc">&gt;=</span> <span class="dv">5</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(durability_lt_5, durability_ge_5)<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="co"># TRUE =&gt; rozdiel je štatisticky významný</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Zistili sme, že rozdiel je štatisticky významný.</p>
+<div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>, <span class="at">y =</span> TOTAL, <span class="at">fill =</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TEAM SPORTS"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"WINTER SPORTS"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"PRECISION SPORTS"</span> <span class="ot">=</span> <span class="st">"green"</span>)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of TOTAL by FIELD CATEGORY"</span>, <span class="at">x =</span> <span class="st">"FIELD CATEGORY"</span>, <span class="at">y =</span> <span class="st">"TOTAL"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>, <span class="at">y =</span> DURABILITY, <span class="at">fill =</span> <span class="st">`</span><span class="at">FIELD CATEGORY</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TEAM SPORTS"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"WINTER SPORTS"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"PRECISION SPORTS"</span> <span class="ot">=</span> <span class="st">"green"</span>)) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of DURABILITY by FIELD CATEGORY"</span>, <span class="at">x =</span> <span class="st">"FIELD CATEGORY"</span>, <span class="at">y =</span> <span class="st">"DURABILITY"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plot1</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-fig.ncol="2">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Z prvého boxplotu vidíme, že medzi kategóriami “TEAM SPORTS”, “WINTER SPORTS” a “PRECISION SPORTS” existuje štatisticky významný rozdiel v premennej Total, čo znamená, že “Team Sports” a “Winter Sports” vyžadujú väčšiu a lepšiu fyzickú kondíciu ako “Precision Sports”. Z druhého boxplotu sa nám potvrdzuje úvaha, že “Precision Sports” sú menej fyzicky náročné.</p>
+</section>
+<section id="je-medzi-endurance-a-nerve-bezkontaktných-športov-štatisticky-významný-vzťah-ak-áno-popíšte-slovne-ako-sa-prejavuje-a-popíšte-ho-vhodným-modelom.-vhodnosť-modelu-overte." class="level2">
+<h2 class="anchored" data-anchor-id="je-medzi-endurance-a-nerve-bezkontaktných-športov-štatisticky-významný-vzťah-ak-áno-popíšte-slovne-ako-sa-prejavuje-a-popíšte-ho-vhodným-modelom.-vhodnosť-modelu-overte.">4. Je medzi Endurance a Nerve bezkontaktných športov štatisticky významný vzťah? Ak áno, popíšte slovne ako sa prejavuje a popíšte ho vhodným modelom. Vhodnosť modelu overte.</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> data[data<span class="sc">$</span><span class="st">"CONTACT CATEGORY"</span> <span class="sc">==</span> <span class="st">"NO"</span>, ]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">cor</span>(table<span class="sc">$</span>ENDURANCE, table<span class="sc">$</span>NERVE, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>c1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(table<span class="sc">$</span>ENDURANCE, table<span class="sc">$</span>NERVE, <span class="at">method =</span> <span class="st">"kendall"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>c2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(table<span class="sc">$</span>ENDURANCE, table<span class="sc">$</span>NERVE, <span class="at">method =</span> <span class="st">"spearman"</span>) <span class="co"># korelácia je okolo 0 =&gt; žiadny lineárny vzťah</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>nonlinear_model <span class="ot">&lt;-</span> <span class="fu">nls</span>(NERVE <span class="sc">~</span> a <span class="sc">*</span> <span class="fu">exp</span>(b <span class="sc">*</span> ENDURANCE), <span class="at">data =</span> table, <span class="at">start =</span> <span class="fu">c</span>(<span class="at">a=</span><span class="dv">1</span>, <span class="at">b=</span><span class="dv">1</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>scatter_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(table, <span class="fu">aes</span>(<span class="at">x =</span> ENDURANCE, <span class="at">y =</span> NERVE)) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot of Endurance and Nerve"</span>, <span class="at">x =</span> <span class="st">"Endurance"</span>, <span class="at">y =</span> <span class="st">"Nerve"</span>) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the non-linear model to the scatter plot</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>scatter_plot_with_model <span class="ot">&lt;-</span> scatter_plot <span class="sc">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">coef</span>(nonlinear_model)[<span class="dv">1</span>] <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">coef</span>(nonlinear_model)[<span class="dv">2</span>] <span class="sc">*</span> x), </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>scatter_plot_with_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Zistili sme, že korelácia je okolo 0 =&gt; žiadny lineárny vzťah. Z toho vyplýva, že medzi Endurance a Nerve bezkontaktných športov nie je štatisticky významný vzťah. Preto sme použili nelineárny model, ktorý nám ukázal, že aj keď medzi nimi nie je lineárny vzťah, tak Endurance a Nerve bezkontaktných športov sú závislé od seba minimálne.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sb <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"SPORT"</span>, <span class="st">"CONTACT CATEGORY"</span>, <span class="st">"FIELD CATEGORY"</span>, <span class="st">"RANK"</span>))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot.mixed</span>(<span class="fu">cor</span>(sb), <span class="at">lower=</span><span class="st">"number"</span>, <span class="at">lower.col =</span> <span class="st">"black"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">upper=</span><span class="st">"circle"</span>, <span class="at">tl.pos =</span> <span class="st">"lt"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>, <span class="at">addCoef.col =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="zadanie_Holík_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pri pohľade na korelačnú maticu sme zistili, daľšie zaujímavé korelácie.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

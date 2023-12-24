@@ -1,17 +1,13 @@
 ---
 title: "Zadanie Holík"
 author: "Marek Holík"
-format: html
-       
+format:  html 
 page-layout: full
 editor: visual
-html_document:
-    toc: true
-    toc-location: left
-    toc_depth: 3
+
 ---
 ## Úvod
-Ako projekt na štatistické analyzovanie som si vybral dataset o športoch, ktorý obsahuje zoznam 60 športov a ich fyziologické nároky. Dataset obsahuje 14 premenných, kde 10 z ich obsahujú číselné hodnoty reprezentujúce: vytrvalosť, silu, explozivitu, rýchlosť, obratnosť, flexibilitu, nervovú odolnosť,výdrž silového zaťaženia, kordináciu a analytické schopnosti. 2 premenné obsahujú kategóriu športu a jeho kontaktonsť. Posledné premenné obsahujú celkové hodnotenie športu vypočítané súčtom všetkých predchádzajúcich hodnôt a výslednú hodnotu v rebríčku. 
+Ako projekt na štatistické analyzovanie som si vybral dataset o športoch, ktorý obsahuje zoznam 60 športov a ich fyziologické nároky. Dataset obsahuje 14 premenných, kde 10 z ich obsahujú číselné hodnoty reprezentujúce: vytrvalosť, silu, explozivitu, rýchlosť, obratnosť, flexibilitu, nervovú odolnosť,výdrž silového zaťaženia, kordináciu a analytické schopnosti. 2 premenné obsahujú kategóriu športu a jeho kontaktnosť. Posledné premenné obsahujú celkové hodnotenie športu vypočítané súčtom všetkých predchádzajúcich hodnôt a výslednú hodnotu v rebríčku. 
 
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -33,8 +29,8 @@ plot1 <- ggplot(data, aes(x = " ", y = TOTAL)) +
     annotate("text", x = 1, y = median(data$TOTAL)+1, label = paste("Median: ", round(median(data$TOTAL), 2)), vjust = 0) +
     annotate("text", x = 1, y = max(data$TOTAL), label = paste("Max: ", round(max(data$TOTAL), 2)), vjust = 0) +
     scale_y_continuous(breaks = seq(0, max(data$TOTAL), by = 5)) +
-    labs(title = "Boxplot of Total", x = " ",
-       y = "Total value") +
+    labs(title = "TOTAL Boxplot", x = " ",
+       y = "TOTAL hodnota") +
     theme_minimal() +
     theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 
@@ -44,7 +40,7 @@ plot_data <- data.frame(Field_Category = names(category_counts), Frequency = as.
 
 plot2 <- ggplot(plot_data, aes(x = Field_Category, y = Frequency, fill = Field_Category)) +
     geom_bar(stat = "identity", ) +
-    labs(title = "Frequency of Types of Sports", x = "Field Category", y = "Frequency", fill = "Field Category") +
+    labs(title = "Frequency of Types of Sports", x = "Field Category", y = "Početnosť", fill = "Field Category") +
     scale_y_continuous(breaks = seq(0, max(plot_data$Frequency), by = 1)) + 
     theme_minimal() +
     theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
@@ -53,37 +49,43 @@ par(mfrow=c(1, 3))
 plot1 
 plot2
 ```
-Z prvého grafu vidíme, že minimálna hodnota v datasete je 14.5, maximálna je 72.38, median je 48, priemerná hodnota je 48.98. Z druhého grafu vidíme, že najviac zastúpená športová kategória je "Athletics" a najmenej "Moto Sports". 
+Z prvého grafu vidíme, že minimálna hodnota v datasete je 14.5, maximálna je 72.38, median je 48, priemerná hodnota je 48.98. Premmená Total je normálne rozdelená so smerodajnou odchýľkou 12.17. Z druhého grafu vidíme, že najviac zastúpená športová kategória je "Athletics" a najmenej "Moto Sports". 
 
 ## 2. Vhodným testom overte na hladine významnosti 0.1, či je Analytic aptitude najviac 4. Porovnajte Analytic aptitude, vzhľadom na to, či ide o kontaktný alebo bezkontaktný šport. Je tento rozdiel štatisticky významný na hladine významnosti 0.01?
 
 
 ```{r, warning=FALSE, fig.align = "center", message=FALSE}
-distr_test <-shapiro.test(data$`ANALYTIC APTITUDE`) # 0.003 < 0.1 => is not normal distribution
+distr_test <-shapiro.test(data$`ANALYTIC APTITUDE`) # 0.003 < 0.1 => nie je normálne rozdelenie
 
 result <- wilcox.test(data$`ANALYTIC APTITUDE`, mu = 4, alternative = "less", conf.level = 0.9)
 result$p.value < 0.1 # FALSE => nie je najviac 4
 ```
-Z testu sme zistili, že hodnoty "ANALYTIC APTITUDE" nie sú normálne rozdelené, preto použijeme neparametrické testy. 
 
 ```{r, fig.align='center', message=FALSE}
 vec1 <-  data$"ANALYTIC APTITUDE"[data$"CONTACT CATEGORY" == "YES"]
 vec2 <-  data$"ANALYTIC APTITUDE"[data$"CONTACT CATEGORY" == "NO"]
 
 df <- data.frame(value = c(vec1, vec2),
-                 category = rep(c("Contact", "Contactless"), c(length(vec1), length(vec2))))
+                 category = rep(c("Kontaktný", "Nekontaktný"), c(length(vec1), length(vec2))))
 
 shapiro.test(vec1)$p.value < 0.1 # p.value < 0.1 => nie je normálne rozdelenie
 shapiro.test(vec2)$p.value < 0.1 # p.value < 0.1 => nie je normálne rozdelenie
+```
+Z testu sme zistili, že hodnoty "ANALYTIC APTITUDE" pri kontaktnosti nie sú normálne rozdelené, preto použijeme neparametrické testy. 
+```{r, fig.align='center', message=FALSE, warning=FALSE}
 result <- wilcox.test(vec1, vec2, alternative = "two.sided", conf.level = 0.99)
 result$p.value < 0.01 # TRUE => rozdiel je statisticky vyznamny, kontanktný šport má vyššie hodnoty "ANALYTIC APTITUDE" ako bezkontaktný
-
+med <- t.test(vec1, vec2)
+med$estimate[1]
+med$estimate[2] # 0.5 => medián kontaktného športu je o cca 2 vyšší ako bezkontaktného
+```
+```{r, fig.align='center', message=FALSE}
 ggplot(df, aes(x = category, y = value, color = category)) +
   geom_point() +
-  scale_color_manual(values = c("Contact" = "darkgreen", "Contactless" = "red"))
+  scale_color_manual(values = c("Kontaktný" = "darkgreen", "Nekontaktný" = "red"))
 ```
 
-HO: Analytic aptitude je najviac 4. H1: Analytic aptitude nie je najviac 4. Pomocou wilcox testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu. Teda Analytic aptitude nie je najviac 4. Pri porovnaní Analytic aptitude vzhľadom na to, či ide o kontaktný alebo bezkontaktný šport sme zistili, že rozdiel je štatisticky významný na hladine významnosti 0.01. Z grafu vidíme, že kontaktný šport má vyššie hodnoty "ANALYTIC APTITUDE" ako bezkontaktný.
+HO: Analytic aptitude je najviac 4. H1: Analytic aptitude nie je najviac 4. Pomocou wilcox testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu a Analytic aptitude nie je najviac 4. Pri porovnaní Analytic aptitude vzhľadom na to, či ide o kontaktný alebo bezkontaktný šport sme zistili, že rozdiel je štatisticky významný na hladine významnosti 0.01. Z grafu vidíme, že kontaktný šport má vyššie hodnoty, resp. medián hodnôt "ANALYTIC APTITUDE" je vyšší ako pri bezkontaktných športoch.
 
 ## 3. Existuje štatisticky významný rozdiel v premennej Total vzhľadom na Field category (berme do úvahy len team sports, winter sports a precision sports) alebo vzhľadom na to či je Durability pod 5 alebo 5 a viac? Overte vhodným testom a aj graficky. Ak rozdiel existuje, tak medzi ktorými? Existuje aj interakcia medzi premennými?
 
@@ -91,30 +93,29 @@ HO: Analytic aptitude je najviac 4. H1: Analytic aptitude nie je najviac 4. Pomo
 
 subset_data <- subset(data, data$"FIELD CATEGORY" %in% c("TEAM SPORTS", "WINTER SPORTS", "PRECISION SPORTS"))
 
-
-result <- shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "TEAM SPORTS"]) # p-value > 0.1 => je normálne rozdelenie
-result <- shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "WINTER SPORTS"]) # p-value > 0.1 => je normálne rozdelenie
-result <- shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "PRECISION SPORTS"]) # p-value > 0.1 => je normálne rozdelenie
+shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "TEAM SPORTS"])$p.value < 0.1 #
+shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "WINTER SPORTS"])$p.value < 0.1 #
+shapiro.test(subset_data$TOTAL[subset_data$`FIELD CATEGORY` == "PRECISION SPORTS"])$p.value < 0.1 #
 ```
-Zistili sme, že všetky 3 kategórie sú normálne rozdelené.
+HO: Rozdelenie je normálne. H1: Rozdelenie nie je Normálne. P-hodnota je vyššia ako hranica výnamnosti, čiže nemôžeme zamietnuť nulovú hypotézu. Všetky 3 kategórie sú normálne rozdelené.
 
 ```{r, attr.output=FALSE}
 model <- aov(TOTAL ~ `FIELD CATEGORY`, data = subset_data)
 aov_result <- anova(model)
 aov_result$"Pr(>F)"[1] < 0.05 # TRUE => rozdiel je štatisticky významný
 
-bartlett.test(TOTAL ~ `FIELD CATEGORY`, data = subset_data)$p.value < 0.05 # TRUE p-value > 0.1 
+kruskal.test(TOTAL ~ `FIELD CATEGORY`, data = subset_data)$p.value < 0.05 # TRUE => rozdiel je štatisticky významný
+bartlett.test(TOTAL ~ `FIELD CATEGORY`, data = subset_data)$p.value < 0.05 # TRUE p-value > 0.1 => rozdiel je štatisticky významný
 
 ```
-HO: Rozdiel v premennej Total vzhľadom na "Field Category" je štatisticky významný. H1: Rozdiel v premennej Total vzhľadom na "Field Category" nie je štatisticky významný. Pomocou ANOVA testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu. Teda rozdiel v premennej Total vzhľadom na "Field Category" je štatisticky významný.
+HO: Rozdiel v premennej Total vzhľadom na "Field Category" nie je štatisticky významný. H1: Rozdiel v premennej Total vzhľadom na "Field Category" je štatisticky významný. Pomocou ANOVA testu sme zistili, že p-value je menšie ako 0.1, teda zamietame nulovú hypotézu. Rozdiel v premennej Total vzhľadom na "Field Category" je štatisticky významný.
 
 ```{r}
 durability_lt_5 <- subset_data$TOTAL[data$DURABILITY < 5]
 durability_ge_5 <- subset_data$TOTAL[data$DURABILITY >= 5]
 t.test(durability_lt_5, durability_ge_5)$p.value < 0.05 # TRUE => rozdiel je štatisticky významný
 ```
-Zistili sme, že rozdiel je štatisticky významný.
-
+HO: Rozdiel Zistili sme, že rozdiel je štatisticky významný.
 
 ```{r, fig.align = "center", fig.ncol=2, fig.width=6, fig.height=6, message=FALSE}
 plot1 <- ggplot(subset_data, aes(x = `FIELD CATEGORY`, y = TOTAL, fill = `FIELD CATEGORY`)) +
@@ -130,8 +131,15 @@ plot2 <- ggplot(subset_data, aes(x = `FIELD CATEGORY`, y = DURABILITY, fill = `F
 plot1
 plot2
 ```
-
 Z prvého boxplotu vidíme, že medzi kategóriami "TEAM SPORTS", "WINTER SPORTS" a "PRECISION SPORTS" existuje štatisticky významný rozdiel v premennej Total, čo znamená, že "Team Sports" a "Winter Sports" vyžadujú väčšiu a lepšiu fyzickú kondíciu ako "Precision Sports". Z druhého boxplotu sa nám potvrdzuje úvaha, že "Precision Sports" sú menej fyzicky náročné.
+
+```{r, fig.align = "center", fig.width=9, fig.height=9}
+sb <- data %>% select(-c("SPORT", "CONTACT CATEGORY", "FIELD CATEGORY"))
+
+corrplot.mixed(cor(sb), lower="number", lower.col = "black", 
+               upper="circle", tl.pos = "lt", tl.col = "black", addCoef.col = "black")
+```
+Pri pohľade na korelačnú maticu sme zistili daľšie zaujímavé korelácie. Napríklad, že Durability a Agility majú veľmi veľký vplyv na obtiažnosť športu. Čiže čím človek potrebuje väčšiu obratnosť pri športovaní, je vysoká pravdepodobnosť, že bude potrebovať aj vyššiu fyzickú kondíciu. Korelačné hodnoty sú zväčša kladné, čo znamená, že nie je dvojica premenných, ktoré by mali opačný vplyv na seba. Jedinou výňimkou je korelácia medzi Total a Rank, kde je logické, že čím sme silnejší, tým číslo ranku klesá.
 
 ## 4. Je medzi Endurance a Nerve bezkontaktných športov štatisticky významný vzťah? Ak áno, popíšte slovne ako sa prejavuje a popíšte ho vhodným modelom. Vhodnosť modelu overte.
 
@@ -140,28 +148,18 @@ table <- data[data$"CONTACT CATEGORY" == "NO", ]
 c <- cor(table$ENDURANCE, table$NERVE, method = "pearson")
 c1 <- cor(table$ENDURANCE, table$NERVE, method = "kendall")
 c2 <- cor(table$ENDURANCE, table$NERVE, method = "spearman") # korelácia je okolo 0 => žiadny lineárny vzťah
-# Scatter plot
+
 nonlinear_model <- nls(NERVE ~ a * exp(b * ENDURANCE), data = table, start = c(a=1, b=1))
 
-# Create a scatter plot
 scatter_plot <- ggplot(table, aes(x = ENDURANCE, y = NERVE)) +
   geom_point() +
   labs(title = "Scatter Plot of Endurance and Nerve", x = "Endurance", y = "Nerve") +
   theme_minimal()
 
-# Add the non-linear model to the scatter plot
 scatter_plot_with_model <- scatter_plot +
   stat_function(fun = function(x) coef(nonlinear_model)[1] * exp(coef(nonlinear_model)[2] * x), 
                 color = "red", linewidth = 1)
 
 scatter_plot_with_model
 ```
-Zistili sme, že korelácia je okolo 0 => žiadny lineárny vzťah. Z toho vyplýva, že medzi Endurance a Nerve bezkontaktných športov nie je štatisticky významný vzťah. Preto sme použili nelineárny model, ktorý nám ukázal, že aj keď medzi nimi nie je lineárny vzťah, tak Endurance a Nerve bezkontaktných športov sú závislé od seba minimálne.
-
-```{r, fig.align = "center", fig.width=9, fig.height=9}
-sb <- data %>% select(-c("SPORT", "CONTACT CATEGORY", "FIELD CATEGORY", "RANK"))
-
-corrplot.mixed(cor(sb), lower="number", lower.col = "black", 
-               upper="circle", tl.pos = "lt", tl.col = "black", addCoef.col = "black")
-```
-Pri pohľade na korelačnú maticu sme zistili, daľšie zaujímavé korelácie.
+Zistili sme, že korelácie medzi Endurance a Nerve sú okolo 0, čiže medzi nimi pri bezkontaktných športov nie je štatisticky významný vzťah. Použili nelineárny model, ktorý nám ukázal, že aj keď medzi nimi nie je lineárny vzťah, tak Endurance a Nerve bezkontaktných športov sú závislé od seba minimálne.
